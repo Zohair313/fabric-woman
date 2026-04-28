@@ -115,12 +115,22 @@ export default function Home() {
   const vantaRef = useRef(null)
   const [vantaEffect, setVantaEffect] = useState(null)
   const [fabrics, setFabrics] = useState([])
+  const [upcomingFabrics, setUpcomingFabrics] = useState([])
 
   // Fetch from backend
   useEffect(() => {
     fetch('http://localhost:8001/api/products/')
       .then(res => res.json())
-      .then(data => setFabrics(data.slice(0, 4)))
+      .then(data => {
+        setFabrics(data.filter(p => !p.is_upcoming).slice(0, 4))
+      })
+      .catch(err => console.error(err))
+
+    fetch('http://localhost:8001/api/upcoming-products/')
+      .then(res => res.json())
+      .then(data => {
+        setUpcomingFabrics(data.slice(0, 3))
+      })
       .catch(err => console.error(err))
   }, [])
 
@@ -152,11 +162,13 @@ export default function Home() {
     return () => clearInterval(t)
   }, [])
 
-  // Vanta.js Birds Init
+  // Vanta.js Topology Init
   useEffect(() => {
-    if (!vantaEffect && window.VANTA && window.VANTA.BIRDS) {
+    if (vantaEffect) vantaEffect.destroy()
+
+    if (window.VANTA && window.VANTA.TOPOLOGY) {
       setVantaEffect(
-        window.VANTA.BIRDS({
+        window.VANTA.TOPOLOGY({
           el: vantaRef.current,
           mouseControls: true,
           touchControls: true,
@@ -165,23 +177,16 @@ export default function Home() {
           minWidth: 200.00,
           scale: 1.00,
           scaleMobile: 1.00,
-          backgroundAlpha: 0.0, // Transparent bg to show original bg & text
-          color1: 0x9c8878, // Taupe
-          color2: 0xf4efe8, // Cream
-          birdSize: 1.5,
-          wingSpan: 24.0,
-          speedLimit: 4.0,
-          separation: 50.0,
-          alignment: 30.0,
-          cohesion: 40.0,
-          quantity: 4.0 // elegant amount
+          color: 0xffffff, // White lines for dark theme
+          backgroundColor: parseInt(heroColor.replace('#', ''), 16),
+          backgroundAlpha: 0.0 // Transparent to show fabric texture
         })
       )
     }
     return () => {
       if (vantaEffect) vantaEffect.destroy()
     }
-  }, [vantaEffect])
+  }, [heroColor])
 
   return (
     <main>
@@ -261,7 +266,7 @@ export default function Home() {
           style={{
             position: 'absolute',
             inset: 0,
-            zIndex: 10,
+            zIndex: 1,
             pointerEvents: 'none',
           }}
         />
@@ -359,7 +364,7 @@ export default function Home() {
             const cat = categoryName.toLowerCase();
             const fabricColor = fabric.color || '#E2D9CC';
             const texture = `repeating-linear-gradient(45deg, ${fabricColor} 0px, rgba(0,0,0,0.05) 2px, ${fabricColor} 4px)`;
-            
+
             return (
               <div key={i} className={`fabric-card scale-in`} style={{ transitionDelay: `${i * 0.1}s` }}>
                 <div
@@ -481,6 +486,43 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      {/* ── UPCOMING RELEASES ── */}
+      {upcomingFabrics.length > 0 && (
+        <section className="upcoming-section" style={{ background: 'var(--espresso)', color: 'var(--cream)' }}>
+          <div className="container">
+            <div className="upcoming__header reveal">
+              <span className="label" style={{ color: 'var(--taupe)' }}>Coming Soon</span>
+              <h2 className="upcoming__heading" style={{ color: 'var(--cream)' }}>
+                Upcoming <em>Releases</em>
+              </h2>
+            </div>
+            <div className="upcoming__grid">
+              {upcomingFabrics.map((fabric, i) => (
+                <div key={i} className="upcoming-card reveal" style={{ transitionDelay: `${i * 0.15}s` }}>
+                  <div className="upcoming-card__img-wrap">
+                    <div 
+                      className="upcoming-card__img"
+                      style={{
+                        backgroundImage: fabric.image ? `url(${getImageUrl(fabric.image)})` : 'none',
+                        backgroundColor: fabric.color || 'var(--taupe)',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                      }}
+                    />
+                    <div className="upcoming-card__badge">Coming Soon</div>
+                  </div>
+                  <div className="upcoming-card__info">
+                    <div className="upcoming-card__name">{fabric.name}</div>
+                    <div className="upcoming-card__meta">{fabric.tag} · {fabric.weight}</div>
+                    <p className="upcoming-card__desc">{fabric.description || 'A new addition to our raw collection. Pure, unfinished, and crafted for excellence.'}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ── TESTIMONIALS ── */}
       <section className="testimonials">

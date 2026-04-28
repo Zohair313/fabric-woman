@@ -5,10 +5,11 @@ import Home from './pages/Home'
 import Collection from './pages/Collection'
 import About from './pages/About'
 import Contact from './pages/Contact'
+import Upcoming from './pages/Upcoming'
 import Faq from './pages/Faq'
 import Preloader from './components/Preloader'
 import Cursor from './components/Cursor'
-import Assistant from './components/Assistant'
+
 
 const RedirectToAdmin = () => {
   useEffect(() => {
@@ -39,11 +40,12 @@ function App() {
             System Live: v1.0.4
           </div>
           <Nav />
-          <Assistant />
+
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/collection" element={<Collection />} />
             <Route path="/about" element={<About />} />
+            <Route path="/upcoming" element={<Upcoming />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/faq" element={<Faq />} />
             <Route path="/adminpanel" element={<RedirectToAdmin />} />

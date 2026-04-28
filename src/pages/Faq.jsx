@@ -22,6 +22,14 @@ const FAQS = [
   {
     q: 'What is the standard lead time for bulk orders?',
     a: 'In-stock fabrics can be dispatched within 5-7 days. Custom weaving runs take approximately 3 to 5 weeks depending on yarn availability and weave complexity.'
+  },
+  {
+    q: 'Are your fabrics sustainable?',
+    a: 'Our greige is inherently more sustainable than finished fabric as it uses no dyes or chemical sizing. We source cotton from farmers committed to reduced water usage.'
+  },
+  {
+    q: 'Do you offer white or dyed fabric?',
+    a: 'We specialize exclusively in "Grey" or greige state fabric. This allows designers to maintain full control over the final finishing and dyeing process.'
   }
 ]
 

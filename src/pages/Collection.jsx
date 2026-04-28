@@ -114,10 +114,10 @@ export default function Collection() {
                       fontSize: '3rem',
                       fontWeight: 300,
                       fontStyle: 'italic',
-                      color: 'rgba(42,31,23,0.2)',
+                      color: 'rgba(42,31,23,0.1)',
                       letterSpacing: '0.1em',
                     }}>
-                      {product.name ? product.name.split(' ')[0] : ''}
+                      {product.name ? (product.name.length > 8 ? 'Grey' : product.name) : 'Grey'}
                     </span>
                   </div>
                 </div>
@@ -136,11 +136,14 @@ export default function Collection() {
             );
           })
         ) : (
-          <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '10rem 0', opacity: 0.6 }}>
-            <div style={{ fontFamily: 'var(--font-display)', fontSize: '2rem', fontStyle: 'italic', marginBottom: '1rem' }}>
-              "Sorry, we are currently out of stock for {activeFilter}."
+          <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '12rem 2rem', background: 'var(--off-white)', border: '1px dashed var(--greige)' }}>
+            <div style={{ fontFamily: 'var(--font-display)', fontSize: '2.5rem', fontStyle: 'italic', marginBottom: '1.5rem', color: 'var(--espresso)' }}>
+              "Fine things take time."
             </div>
-            <p style={{ letterSpacing: '0.1em', textTransform: 'uppercase', fontSize: '0.8rem' }}>Please check back soon or browse other categories.</p>
+            <p style={{ letterSpacing: '0.1em', textTransform: 'uppercase', fontSize: '0.8rem', color: 'var(--taupe)', maxWidth: '400px', margin: '0 auto' }}>
+              We are currently preparing new rolls of {activeFilter} greige. 
+              Please check our other categories or contact us for a custom mill run.
+            </p>
           </div>
         )}
       </div>

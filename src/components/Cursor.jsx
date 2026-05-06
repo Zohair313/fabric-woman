@@ -53,6 +53,11 @@ export default function Cursor() {
 
   return (
     <>
+      <style>{`
+        @media (max-width: 1024px) {
+          .cursor, .cursor-follower { display: none !important; }
+        }
+      `}</style>
       <div className="cursor" ref={cursorRef} />
       <div className="cursor-follower" ref={followerRef} />
     </>

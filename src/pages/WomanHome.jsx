@@ -86,10 +86,12 @@ export default function WomanHome() {
           @media (max-width: 991px) {
             .w-hero { height: auto; min-height: 100vh; padding: 120px 5vw 60px; display: block; }
             .w-hero-content { grid-template-columns: 1fr; gap: 4rem; display: flex; flex-direction: column; }
-            .w-hero-title { font-size: 5rem; line-height: 1; }
+            .w-hero-title { font-size: 4rem; line-height: 1.1; margin-left: 0; }
+            .w-hero-title .italic { margin-top: 0; letter-spacing: 0; }
             .w-hero-image-wrap { height: 50vh; width: 100%; clip-path: none; order: -1; }
             .w-hero-bg-text { display: none; }
             .w-hero-tag { display: none; }
+            .w-marquee-v { display: none; }
             
             .w-horiz-container { height: auto; width: 100%; flex-direction: column; display: block; }
             .w-horiz-panel { height: auto; width: 100%; padding: 60px 5vw; border-bottom: 1px solid rgba(178, 132, 190, 0.1); display: block; }

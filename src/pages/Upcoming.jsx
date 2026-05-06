@@ -14,7 +14,7 @@ export default function Upcoming() {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch('http://localhost:8001/api/upcoming-products/')
+      const res = await fetch('http://localhost:8001/api/products/upcoming/')
       const data = await res.json()
       setProducts(data)
     } catch (err) {

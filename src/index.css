@@ -1883,7 +1883,7 @@ section {
 
   .products-grid {
     grid-template-columns: 1fr;
-    pad: 0;
+    padding: 0;
   }
 
   .values-grid {

@@ -29,7 +29,6 @@ export default function Nav() {
         <ul className="nav__links desktop-only">
           <li><Link to="/">Home</Link></li>
           <li><Link to="/collection">Collection</Link></li>
-          <li><Link to="/upcoming">Release Soon</Link></li>
           <li><Link to="/about">About</Link></li>
           <li><Link to="/contact">Contact</Link></li>
         </ul>
@@ -55,7 +54,6 @@ export default function Nav() {
           <ul className="nav__mobile-links">
             <li><Link to="/" onClick={() => setIsOpen(false)}>Home</Link></li>
             <li><Link to="/collection" onClick={() => setIsOpen(false)}>Collection</Link></li>
-            <li><Link to="/upcoming" onClick={() => setIsOpen(false)}>Release Soon</Link></li>
             <li><Link to="/about" onClick={() => setIsOpen(false)}>About</Link></li>
             <li><Link to="/contact" onClick={() => setIsOpen(false)}>Contact</Link></li>
             <li><Link to="/faq" onClick={() => setIsOpen(false)}>FAQ</Link></li>

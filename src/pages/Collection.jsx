@@ -1,173 +1,215 @@
-import { useState, useEffect } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
-import { useScrollReveal } from '../hooks/useScrollReveal'
+import { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
+import { gsap } from 'gsap'
+import { useScrollReveal, useParallax } from '../hooks/useScrollReveal'
 import Footer from '../components/Footer'
 
-const FILTERS = ['All', 'Cotton', 'Linen', 'Canvas']
+const GREY_PRODUCTS = [
+  { id: 101, name: 'Industrial Cotton', category: 'Heavy Duty', weight: '320gsm', stock: '2,400m', image: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&q=80&w=800' },
+  { id: 102, name: 'Standard Greige', category: 'Raw Material', weight: '180gsm', stock: '1,150m', image: 'https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&q=80&w=800' },
+  { id: 103, name: 'Woven Twill', category: 'Apparel', weight: '220gsm', stock: '850m', image: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&q=80&w=800' },
+  { id: 104, name: 'Canvas Pro', category: 'Technical', weight: '450gsm', stock: '3,200m', image: 'https://images.unsplash.com/photo-1574015974293-817f0efebb1b?auto=format&fit=crop&q=80&w=800' },
+  { id: 105, name: 'Fine Muslin', category: 'Sheer', weight: '90gsm', stock: '1,200m', image: 'https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?auto=format&fit=crop&q=80&w=800' },
+  { id: 106, name: 'Linen Base', category: 'Natural', weight: '160gsm', stock: '500m', image: 'https://images.unsplash.com/photo-1529139572765-397437ef19b2?auto=format&fit=crop&q=80&w=800' },
+]
 
-const WOVEN_PATTERNS = {
-  cotton: `repeating-linear-gradient(0deg, transparent 0px, transparent 4px, rgba(0,0,0,0.04) 4px, rgba(0,0,0,0.04) 5px), repeating-linear-gradient(90deg, transparent 0px, transparent 4px, rgba(0,0,0,0.04) 4px, rgba(0,0,0,0.04) 5px)`,
-  linen: `repeating-linear-gradient(45deg, transparent 0px, transparent 6px, rgba(0,0,0,0.05) 6px, rgba(0,0,0,0.05) 7px), repeating-linear-gradient(-45deg, transparent 0px, transparent 6px, rgba(0,0,0,0.05) 6px, rgba(0,0,0,0.05) 7px)`,
-  canvas: `repeating-linear-gradient(0deg, transparent 0px, transparent 8px, rgba(0,0,0,0.07) 8px, rgba(0,0,0,0.07) 9px), repeating-linear-gradient(90deg, transparent 0px, transparent 8px, rgba(0,0,0,0.07) 8px, rgba(0,0,0,0.07) 9px)`,
-}
+const heroFabricBg = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E`
 
 export default function Collection() {
   useScrollReveal()
-  const [searchParams, setSearchParams] = useSearchParams()
-  const filterParam = searchParams.get('filter')
-  const [activeFilter, setActiveFilter] = useState('All')
-  const [products, setProducts] = useState([])
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    fetchProducts()
-  }, [])
-
-  const fetchProducts = async () => {
-    try {
-      const res = await fetch('http://localhost:8001/api/products/')
-      const data = await res.json()
-      setProducts(data)
-    } catch (err) {
-      console.error("Error fetching products:", err)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  useEffect(() => {
-    if (filterParam) {
-      const matched = FILTERS.find(f => f.toLowerCase() === filterParam.toLowerCase())
-      if (matched) setActiveFilter(matched)
-    } else {
-      setActiveFilter('All')
-    }
-  }, [filterParam])
-
-  const handleFilterChange = (f) => {
-    setActiveFilter(f)
-    if (f === 'All') {
-      setSearchParams({})
-    } else {
-      setSearchParams({ filter: f.toLowerCase() })
-    }
-  }
-
-  const filtered = products.filter(p =>
-    activeFilter === 'All' || (p.category_name && p.category_name.toLowerCase() === activeFilter.toLowerCase())
-  )
-
-  const getImageUrl = (url) => {
-    if (!url) return null;
-    if (url.startsWith('http')) return url;
-    return `http://localhost:8001${url}`;
-  };
+  const heroBgRef = useRef(null)
+  useParallax(heroBgRef, 0.2)
 
   return (
-    <main className="collection-page">
-      <div className="collection-page__hero">
-        <h1 className="collection-page__title">The Fabric Range</h1>
-        <p className="collection-page__sub">40+ greige varieties · Sustainable sourcing · Bulk & sample orders</p>
-      </div>
+    <main className="grey-coll-page">
+      <style>{`
+        .grey-coll-page {
+          background: var(--cream);
+          color: var(--espresso);
+          min-height: 100vh;
+          font-family: 'Jost', sans-serif;
+        }
 
-      <div className="filter-bar">
-        {FILTERS.map(f => (
-          <button
-            key={f}
-            className={`filter-btn${activeFilter === f ? ' active' : ''}`}
-            onClick={() => handleFilterChange(f)}
-          >
-            {f}
-          </button>
-        ))}
-      </div>
+        .coll-hero {
+          height: 60vh;
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          background: var(--espresso);
+        }
 
-      <div className="products-grid">
-        {filtered.length > 0 ? (
-          filtered.map((product, i) => {
-            const imageUrl = getImageUrl(product.image);
-            const catName = product.category_name || 'Cotton';
-            const cat = catName.toLowerCase();
-            
-            return (
-              <div key={i} className="product-card reveal" style={{ transitionDelay: `${i * 0.08}s` }}>
-                <div className="product-card__image">
-                  <div style={{
-                    width: '100%',
-                    height: '100%',
-                    background: imageUrl ? `url(${imageUrl})` : product.color,
-                    backgroundImage: imageUrl ? `url(${imageUrl})` : WOVEN_PATTERNS[cat],
-                    backgroundSize: imageUrl ? 'cover' : '12px 12px',
-                    backgroundPosition: 'center',
-                    position: 'absolute',
-                    inset: 0,
-                  }} />
-                  <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                    <span style={{
-                      fontFamily: 'var(--font-display)',
-                      fontSize: '3rem',
-                      fontWeight: 300,
-                      fontStyle: 'italic',
-                      color: 'rgba(42,31,23,0.1)',
-                      letterSpacing: '0.1em',
-                    }}>
-                      {product.name ? (product.name.length > 8 ? 'Grey' : product.name) : 'Grey'}
-                    </span>
-                  </div>
+        .coll-hero-bg {
+          position: absolute;
+          inset: 0;
+          background-image: 
+            url("${heroFabricBg}"),
+            repeating-linear-gradient(0deg, rgba(200,185,168,0.05) 0px, rgba(200,185,168,0.05) 1px, transparent 1px, transparent 10px),
+            repeating-linear-gradient(90deg, rgba(200,185,168,0.05) 0px, rgba(200,185,168,0.05) 1px, transparent 1px, transparent 10px);
+          background-size: 400px 400px, 10px 10px, 10px 10px;
+          opacity: 0.6;
+        }
+
+        .coll-hero-content {
+          position: relative;
+          z-index: 2;
+          text-align: center;
+        }
+
+        .coll-hero-title {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: clamp(4rem, 10vw, 8rem);
+          font-weight: 300;
+          color: var(--cream);
+          line-height: 1;
+          margin-bottom: 1.5rem;
+          font-style: italic;
+        }
+
+        .coll-hero-meta {
+          color: var(--greige);
+          text-transform: uppercase;
+          letter-spacing: 0.4rem;
+          font-size: 0.9rem;
+        }
+
+        .coll-container {
+          padding: 8rem 5vw;
+        }
+
+        .coll-filter-bar {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-end;
+          margin-bottom: 6rem;
+          border-bottom: 1px solid rgba(42, 31, 23, 0.1);
+          padding-bottom: 2rem;
+        }
+
+        .filter-label {
+          font-size: 0.75rem;
+          text-transform: uppercase;
+          letter-spacing: 0.2rem;
+          opacity: 0.5;
+        }
+
+        .grey-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 8rem 4vw;
+        }
+
+        .grey-card {
+          text-decoration: none;
+          color: inherit;
+          display: block;
+        }
+
+        .grey-card-img-wrap {
+          aspect-ratio: 3/2;
+          overflow: hidden;
+          background: var(--greige);
+          margin-bottom: 2.5rem;
+          position: relative;
+          border: 1px solid rgba(42, 31, 23, 0.05);
+        }
+
+        .grey-card-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+          filter: grayscale(20%);
+        }
+
+        .grey-card:hover .grey-card-img {
+          transform: scale(1.05);
+        }
+
+        .grey-card-texture {
+          position: absolute;
+          inset: 0;
+          background-image: url("${heroFabricBg}");
+          background-size: 200px 200px;
+          opacity: 0.15;
+          pointer-events: none;
+        }
+
+        .grey-card-info {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+        }
+
+        .grey-card-name {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 2.5rem;
+          font-weight: 300;
+          margin-bottom: 0.5rem;
+          line-height: 1;
+        }
+
+        .grey-card-cat {
+          font-size: 0.7rem;
+          text-transform: uppercase;
+          letter-spacing: 0.15rem;
+          opacity: 0.6;
+        }
+
+        .grey-card-stats {
+          text-align: right;
+          font-size: 0.75rem;
+          opacity: 0.5;
+          letter-spacing: 0.1rem;
+        }
+
+        .grey-card-stats div {
+          margin-bottom: 0.3rem;
+        }
+
+        @media (max-width: 991px) {
+          .grey-grid { grid-template-columns: 1fr; gap: 6rem; }
+        }
+      `}</style>
+
+      <section className="coll-hero">
+        <div ref={heroBgRef} className="coll-hero-bg" />
+        <div className="coll-hero-content">
+          <h1 className="coll-hero-title">The Archive</h1>
+          <p className="coll-hero-meta">Karachi Industrial Excellence</p>
+        </div>
+      </section>
+
+      <div className="coll-container">
+        <div className="coll-filter-bar reveal">
+          <div>
+            <span className="filter-label">Currently Showing</span>
+            <div style={{ fontSize: '1.2rem', marginTop: '0.5rem' }}>All Raw Materials (06)</div>
+          </div>
+          <div className="filter-label">Filtered by Batch Stability</div>
+        </div>
+
+        <div className="grey-grid">
+          {GREY_PRODUCTS.map((product, i) => (
+            <Link to="/contact" key={product.id} className="grey-card reveal" style={{ transitionDelay: `${i * 0.1}s` }}>
+              <div className="grey-card-img-wrap">
+                <img src={product.image} alt={product.name} className="grey-card-img" />
+                <div className="grey-card-texture" />
+              </div>
+              <div className="grey-card-info">
+                <div>
+                  <div className="grey-card-cat">{product.category}</div>
+                  <h3 className="grey-card-name">{product.name}</h3>
                 </div>
-                <div className="product-card__body">
-                  <div className="product-card__tag">{product.tag}</div>
-                  <div className="product-card__name">{product.name}</div>
-                  <div className="product-card__weight">{product.weight}</div>
-                  <div style={{ marginTop: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#4CAF50' }}></span>
-                    <span style={{ fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--espresso)', fontWeight: 500 }}>
-                      Stock: {product.stock}
-                    </span>
-                  </div>
+                <div className="grey-card-stats">
+                  <div>{product.weight}</div>
+                  <div style={{ color: '#4CAF50', opacity: 1 }}>{product.stock} Stock</div>
                 </div>
               </div>
-            );
-          })
-        ) : (
-          <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '12rem 2rem', background: 'var(--off-white)', border: '1px dashed var(--greige)' }}>
-            <div style={{ fontFamily: 'var(--font-display)', fontSize: '2.5rem', fontStyle: 'italic', marginBottom: '1.5rem', color: 'var(--espresso)' }}>
-              "Fine things take time."
-            </div>
-            <p style={{ letterSpacing: '0.1em', textTransform: 'uppercase', fontSize: '0.8rem', color: 'var(--taupe)', maxWidth: '400px', margin: '0 auto' }}>
-              We are currently preparing new rolls of {activeFilter} greige. 
-              Please check our other categories or contact us for a custom mill run.
-            </p>
-          </div>
-        )}
-      </div>
-
-      <div style={{
-        textAlign: 'center',
-        padding: '6rem var(--gutter)',
-        background: 'var(--greige)',
-      }}>
-        <h2 style={{
-          fontFamily: 'var(--font-display)',
-          fontSize: 'clamp(2rem, 4vw, 4rem)',
-          fontWeight: 300,
-          color: 'var(--espresso)',
-          marginBottom: '1.5rem',
-          fontStyle: 'italic',
-        }}>
-          Need a custom weight or weave?
-        </h2>
-        <p style={{ color: 'var(--charcoal)', marginBottom: '2.5rem', maxWidth: '420px', margin: '0 auto 2.5rem' }}>
-          We take custom mill orders for brands that need specific GSM,
-          width, or fibre composition.
-        </p>
-        <Link to="/contact" className="cta-btn"><span>Talk to Us</span></Link>
+            </Link>
+          ))}
+        </div>
       </div>
 
       <Footer />

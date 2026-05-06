@@ -115,21 +115,13 @@ export default function Home() {
   const vantaRef = useRef(null)
   const [vantaEffect, setVantaEffect] = useState(null)
   const [fabrics, setFabrics] = useState([])
-  const [upcomingFabrics, setUpcomingFabrics] = useState([])
 
   // Fetch from backend
   useEffect(() => {
     fetch('http://localhost:8001/api/products/')
       .then(res => res.json())
       .then(data => {
-        setFabrics(data.filter(p => !p.is_upcoming).slice(0, 4))
-      })
-      .catch(err => console.error(err))
-
-    fetch('http://localhost:8001/api/upcoming-products/')
-      .then(res => res.json())
-      .then(data => {
-        setUpcomingFabrics(data.slice(0, 3))
+        setFabrics(data.slice(0, 4))
       })
       .catch(err => console.error(err))
   }, [])
@@ -358,10 +350,8 @@ export default function Home() {
           <Link to="/collection" className="collection__link">View All →</Link>
         </div>
         <div className="collection__grid">
-          {fabrics.map((fabric, i) => {
+          {(fabrics.length > 0 ? fabrics : FABRICS).map((fabric, i) => {
             const imageUrl = getImageUrl(fabric.image);
-            const categoryName = fabric.category_name || 'Cotton';
-            const cat = categoryName.toLowerCase();
             const fabricColor = fabric.color || '#E2D9CC';
             const texture = `repeating-linear-gradient(45deg, ${fabricColor} 0px, rgba(0,0,0,0.05) 2px, ${fabricColor} 4px)`;
 
@@ -486,43 +476,6 @@ export default function Home() {
           ))}
         </div>
       </section>
-
-      {/* ── UPCOMING RELEASES ── */}
-      {upcomingFabrics.length > 0 && (
-        <section className="upcoming-section" style={{ background: 'var(--espresso)', color: 'var(--cream)' }}>
-          <div className="container">
-            <div className="upcoming__header reveal">
-              <span className="label" style={{ color: 'var(--taupe)' }}>Coming Soon</span>
-              <h2 className="upcoming__heading" style={{ color: 'var(--cream)' }}>
-                Upcoming <em>Releases</em>
-              </h2>
-            </div>
-            <div className="upcoming__grid">
-              {upcomingFabrics.map((fabric, i) => (
-                <div key={i} className="upcoming-card reveal" style={{ transitionDelay: `${i * 0.15}s` }}>
-                  <div className="upcoming-card__img-wrap">
-                    <div 
-                      className="upcoming-card__img"
-                      style={{
-                        backgroundImage: fabric.image ? `url(${getImageUrl(fabric.image)})` : 'none',
-                        backgroundColor: fabric.color || 'var(--taupe)',
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                      }}
-                    />
-                    <div className="upcoming-card__badge">Coming Soon</div>
-                  </div>
-                  <div className="upcoming-card__info">
-                    <div className="upcoming-card__name">{fabric.name}</div>
-                    <div className="upcoming-card__meta">{fabric.tag} · {fabric.weight}</div>
-                    <p className="upcoming-card__desc">{fabric.description || 'A new addition to our raw collection. Pure, unfinished, and crafted for excellence.'}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* ── TESTIMONIALS ── */}
       <section className="testimonials">

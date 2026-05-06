@@ -1,223 +1,231 @@
-import { useState } from 'react'
-import { useScrollReveal } from '../hooks/useScrollReveal'
+import { useState, useRef } from 'react'
+import { useScrollReveal, useParallax } from '../hooks/useScrollReveal'
 import Footer from '../components/Footer'
+
+const heroFabricBg = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E`
 
 export default function Contact() {
   useScrollReveal()
-  const [form, setForm] = useState({ name: '', email: '', company: '', type: '', message: '' })
   const [sent, setSent] = useState(false)
+  const heroBgRef = useRef(null)
+  useParallax(heroBgRef, 0.15)
 
-  const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value })
-
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault()
     setSent(true)
   }
 
   return (
-    <main style={{ paddingTop: '120px', background: 'var(--off-white)', minHeight: '100vh' }}>
-      {/* Header */}
-      <div style={{
-        background: 'var(--espresso)',
-        padding: '5rem var(--gutter) 4rem',
-        textAlign: 'center',
-        position: 'relative',
-        overflow: 'hidden',
-      }}>
-        <div style={{
-          position: 'absolute',
-          inset: 0,
-          background: `
-            repeating-linear-gradient(45deg, rgba(200,185,168,0.04) 0px, rgba(200,185,168,0.04) 2px, transparent 2px, transparent 10px),
-            repeating-linear-gradient(-45deg, rgba(200,185,168,0.04) 0px, rgba(200,185,168,0.04) 2px, transparent 2px, transparent 10px)
-          `,
-          backgroundSize: '10px 10px',
-        }} />
-        <h1 style={{
-          fontFamily: 'var(--font-display)',
-          fontSize: 'clamp(3rem, 6vw, 7rem)',
-          fontWeight: 300,
-          fontStyle: 'italic',
-          color: 'var(--cream)',
-          position: 'relative',
-          zIndex: 1,
-          marginBottom: '1rem',
-        }}>
-          Let's talk fabric
-        </h1>
-        <p style={{
-          fontSize: '0.85rem',
-          letterSpacing: '0.18em',
-          textTransform: 'uppercase',
-          color: 'var(--taupe)',
-          position: 'relative',
-          zIndex: 1,
-        }}>
-          Samples · Bulk Orders · Custom Weaves
-        </p>
-      </div>
+    <main className="grey-contact-page">
+      <style>{`
+        .grey-contact-page {
+          background: var(--cream);
+          color: var(--espresso);
+          min-height: 100vh;
+          font-family: 'Jost', sans-serif;
+        }
 
-      {/* Two-col layout */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr 1.3fr',
-        maxWidth: 'var(--container)',
-        margin: '0 auto',
-        padding: '6rem var(--gutter)',
-        gap: '8rem',
-        alignItems: 'start',
-      }}>
-        {/* Left info */}
-        <div className="reveal-left">
-          <span className="label" style={{ display: 'block', marginBottom: '2rem' }}>Get In Touch</span>
+        .contact-hero {
+          height: 50vh;
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          background: var(--espresso);
+        }
 
-          <div style={{ marginBottom: '3rem' }}>
-            <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.1rem', color: 'var(--espresso)', marginBottom: '0.5rem', fontStyle: 'italic' }}>
-              Email
-            </div>
-            <a href="mailto:hello@greyfabric.co" style={{ fontSize: '0.9rem', color: 'var(--taupe)', transition: 'color 0.3s' }}>
-              hello@greyfabric.co
-            </a>
+        .contact-hero-bg {
+          position: absolute;
+          inset: 0;
+          background-image: 
+            url("${heroFabricBg}"),
+            repeating-linear-gradient(45deg, rgba(200,185,168,0.04) 0px, rgba(200,185,168,0.04) 2px, transparent 2px, transparent 8px);
+          background-size: 400px 400px, 8px 8px;
+        }
+
+        .contact-container {
+          padding: 8rem 5vw;
+          display: grid;
+          grid-template-columns: 1fr 1.2fr;
+          gap: 10vw;
+          align-items: start;
+        }
+
+        .contact-title {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: clamp(3.5rem, 6vw, 6rem);
+          font-weight: 300;
+          line-height: 0.95;
+          margin-bottom: 4rem;
+          font-style: italic;
+        }
+
+        .info-group {
+          margin-bottom: 5rem;
+        }
+
+        .info-label {
+          font-size: 0.75rem;
+          text-transform: uppercase;
+          letter-spacing: 0.25rem;
+          opacity: 0.5;
+          margin-bottom: 1.5rem;
+          display: block;
+        }
+
+        .info-value {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 1.8rem;
+          line-height: 1.4;
+          font-weight: 400;
+        }
+
+        .form-card {
+          background: #FFFFFF;
+          padding: 5rem;
+          position: relative;
+          border: 1px solid rgba(42, 31, 23, 0.08);
+          box-shadow: 0 40px 80px rgba(42, 31, 23, 0.03);
+        }
+
+        .form-card::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background-image: url("${heroFabricBg}");
+          background-size: 200px 200px;
+          opacity: 0.03;
+          pointer-events: none;
+        }
+
+        .grey-input-group {
+          margin-bottom: 3rem;
+        }
+
+        .grey-label {
+          display: block;
+          font-size: 0.7rem;
+          text-transform: uppercase;
+          letter-spacing: 0.15rem;
+          margin-bottom: 1rem;
+          opacity: 0.6;
+        }
+
+        .grey-input {
+          width: 100%;
+          background: transparent;
+          border: none;
+          border-bottom: 1px solid rgba(42, 31, 23, 0.2);
+          padding: 1.2rem 0;
+          font-family: inherit;
+          font-size: 1.1rem;
+          outline: none;
+          transition: border-color 0.4s;
+        }
+
+        .grey-input:focus {
+          border-bottom-color: var(--espresso);
+        }
+
+        .grey-submit {
+          background: var(--espresso);
+          color: var(--cream);
+          border: none;
+          padding: 1.8rem 4rem;
+          font-family: inherit;
+          text-transform: uppercase;
+          letter-spacing: 0.3rem;
+          font-weight: 600;
+          font-size: 0.8rem;
+          cursor: pointer;
+          width: 100%;
+          transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .grey-submit:hover {
+          background: #3D2D21;
+          transform: translateY(-5px);
+        }
+
+        .success-box {
+          text-align: center;
+          padding: 6rem 0;
+        }
+
+        .success-box h2 {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 3rem;
+          margin-bottom: 1rem;
+          font-weight: 300;
+        }
+
+        @media (max-width: 991px) {
+          .contact-container { grid-template-columns: 1fr; gap: 6rem; }
+          .form-card { padding: 3rem 2rem; }
+        }
+      `}</style>
+
+      <section className="contact-hero">
+        <div ref={heroBgRef} className="contact-hero-bg" />
+        <div style={{ position: 'relative', zIndex: 2 }}>
+          <h2 style={{ color: 'var(--cream)', textTransform: 'uppercase', letterSpacing: '1rem', fontSize: '1rem', fontWeight: 300 }}>Get In Touch</h2>
+        </div>
+      </section>
+
+      <div className="contact-container">
+        <div className="contact-left">
+          <h1 className="contact-title reveal">Procurement <br/> Inquiry</h1>
+          
+          <div className="info-group reveal">
+            <span className="info-label">Global Logistics</span>
+            <div className="info-value">Direct export from Karachi port <br/> to worldwide destinations.</div>
           </div>
 
-          <div style={{ marginBottom: '3rem' }}>
-            <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.1rem', color: 'var(--espresso)', marginBottom: '0.5rem', fontStyle: 'italic' }}>
-              Phone
-            </div>
-            <a href="tel:+923222548132" style={{ fontSize: '0.9rem', color: 'var(--taupe)' }}>
-              +92 322 2548132
-            </a>
+          <div className="info-group reveal">
+            <span className="info-label">Communication</span>
+            <div className="info-value">office@greyfabric.co <br/> +92 322 2548132</div>
           </div>
 
-          <div style={{ marginBottom: '3rem' }}>
-            <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.1rem', color: 'var(--espresso)', marginBottom: '0.5rem', fontStyle: 'italic' }}>
-              Location
-            </div>
-            <p style={{ fontSize: '0.9rem', color: 'var(--taupe)', lineHeight: 1.7 }}>
-              Lahore, Punjab<br />Pakistan
-            </p>
+          <div className="info-group reveal">
+            <span className="info-label">Headquarters</span>
+            <div className="info-value">Industrial Zone 4, Karachi, <br/> Pakistan.</div>
           </div>
-
-          {/* Fabric swatch preview */}
-          <div style={{
-            display: 'flex',
-            gap: '1rem',
-            marginTop: '3rem',
-            paddingTop: '3rem',
-            borderTop: '1px solid var(--greige)',
-          }}>
-            {['#E2D9CC', '#C8B9A8', '#9C8878', '#6B4F3A', '#2A1F17'].map((c, i) => (
-              <div key={i} style={{
-                width: '40px',
-                height: '60px',
-                background: c,
-                backgroundImage: `repeating-linear-gradient(0deg, transparent 0px, transparent 3px, rgba(0,0,0,0.05) 3px, rgba(0,0,0,0.05) 4px)`,
-              }} />
-            ))}
-          </div>
-          <p style={{ fontSize: '0.7rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--greige-mid)', marginTop: '1rem' }}>
-            Request physical swatches
-          </p>
         </div>
 
-        {/* Form */}
-        <div className="reveal-right">
-          {sent ? (
-            <div style={{
-              textAlign: 'center',
-              padding: '4rem 2rem',
-              background: 'var(--greige)',
-            }}>
-              <div style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: '3rem',
-                fontWeight: 300,
-                fontStyle: 'italic',
-                color: 'var(--espresso)',
-                marginBottom: '1rem',
-              }}>
-                Thank you.
+        <div className="contact-right reveal">
+          <div className="form-card">
+            {sent ? (
+              <div className="success-box">
+                <h2>Request Received</h2>
+                <p>An industrial associate will review your procurement request and contact you within 24 hours.</p>
               </div>
-              <p style={{ color: 'var(--charcoal)', fontSize: '0.9rem' }}>
-                We'll be in touch within 24 hours.
-              </p>
-            </div>
-          ) : (
-            <form className="contact__form" onSubmit={handleSubmit}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
-                <div className="form-group">
-                  <label className="form-label">Full Name</label>
-                  <input
-                    className="form-input"
-                    type="text"
-                    name="name"
-                    placeholder="Your name"
-                    value={form.name}
-                    onChange={handleChange}
-                    required
-                  />
+            ) : (
+              <form onSubmit={handleSubmit}>
+                <div className="grey-input-group">
+                  <label className="grey-label">Company Name</label>
+                  <input type="text" className="grey-input" required />
                 </div>
-                <div className="form-group">
-                  <label className="form-label">Email</label>
-                  <input
-                    className="form-input"
-                    type="email"
-                    name="email"
-                    placeholder="your@email.com"
-                    value={form.email}
-                    onChange={handleChange}
-                    required
-                  />
+                <div className="grey-input-group">
+                  <label className="grey-label">Representative</label>
+                  <input type="text" className="grey-input" required />
                 </div>
-              </div>
-
-              <div className="form-group">
-                <label className="form-label">Company / Brand</label>
-                <input
-                  className="form-input"
-                  type="text"
-                  name="company"
-                  placeholder="Your company or brand"
-                  value={form.company}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="form-group">
-                <label className="form-label">What do you need?</label>
-                <select
-                  className="form-input"
-                  name="type"
-                  value={form.type}
-                  onChange={handleChange}
-                  style={{ cursor: 'none' }}
-                >
-                  <option value="">Select inquiry type</option>
-                  <option value="samples">Sample Request</option>
-                  <option value="bulk">Bulk Order</option>
-                  <option value="custom">Custom Weave / Mill Order</option>
-                  <option value="partnership">Partnership</option>
-                </select>
-              </div>
-
-              <div className="form-group">
-                <label className="form-label">Message</label>
-                <textarea
-                  className="form-textarea"
-                  name="message"
-                  placeholder="Describe what you're looking for — fabric type, GSM, quantities..."
-                  value={form.message}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div>
-                <button type="submit" className="cta-btn">
-                  <span>Send Inquiry</span>
-                </button>
-              </div>
-            </form>
-          )}
+                <div className="grey-input-group">
+                  <label className="grey-label">Professional Email</label>
+                  <input type="email" className="grey-input" required />
+                </div>
+                <div className="grey-input-group">
+                  <label className="grey-label">Bulk Quantity Estimate</label>
+                  <input type="text" className="grey-input" placeholder="e.g. 5,000 Metres" required />
+                </div>
+                <div className="grey-input-group">
+                  <label className="grey-label">Fabric Specification</label>
+                  <textarea className="grey-input" style={{ minHeight: '100px' }} placeholder="e.g. Cotton Drill, 320gsm, Raw Greige..."></textarea>
+                </div>
+                <button type="submit" className="grey-submit">Submit Request</button>
+              </form>
+            )}
+          </div>
         </div>
       </div>
 

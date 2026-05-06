@@ -42,19 +42,21 @@ export default function WomanHome() {
         ease: 'power3.out'
       })
 
-      // Horizontal Scroll Section
-      const sections = gsap.utils.toArray('.w-horiz-panel')
-      gsap.to(sections, {
-        xPercent: -100 * (sections.length - 1),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.w-horiz-container',
-          pin: true,
-          scrub: 1,
-          snap: 1 / (sections.length - 1),
-          end: () => '+=' + document.querySelector('.w-horiz-container').offsetWidth
-        }
-      })
+      // Horizontal Scroll Section - Only on Desktop
+      if (window.innerWidth > 991) {
+        const sections = gsap.utils.toArray('.w-horiz-panel')
+        gsap.to(sections, {
+          xPercent: -100 * (sections.length - 1),
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '.w-horiz-container',
+            pin: true,
+            scrub: 1,
+            snap: 1 / (sections.length - 1),
+            end: () => '+=' + document.querySelector('.w-horiz-container').offsetWidth
+          }
+        })
+      }
 
       // Vertical text reveal
       gsap.from('.w-reveal-text', {
@@ -81,26 +83,24 @@ export default function WomanHome() {
           font-family: 'Playfair Display', serif;
         }
 
-        @media (max-width: 991px) {
-          .w-hero { height: auto; padding: 120px 5vw 60px; }
-          .w-hero-content { grid-template-columns: 1fr; gap: 2rem; }
-          .w-hero-title { font-size: clamp(4rem, 15vw, 8rem); line-height: 1; }
-          .w-hero-image-wrap { height: 60vh; clip-path: none; }
-          .w-hero-bg-text { display: none; }
-          .w-hero-tag { display: none; }
-          
-          .w-horiz-container { height: auto; width: 100%; flex-direction: column; }
-          .w-horiz-panel { height: auto; width: 100%; padding: 80px 5vw; border-bottom: 1px solid rgba(178, 132, 190, 0.1); }
-          .w-panel-content { grid-template-columns: 1fr; gap: 2rem; text-align: center; }
-          .w-panel-text { font-size: 2rem; order: 1; }
-          .w-panel-img { width: 80%; margin: 0 auto; order: 2; }
-          
-          .w-footer-alt-content { flex-direction: column; text-align: center; gap: 3rem; }
-          .w-footer-social { justify-content: center; }
-        }
-      `}</style>
-
-      <WomanNav />
+          @media (max-width: 991px) {
+            .w-hero { height: auto; min-height: 100vh; padding: 120px 5vw 60px; display: block; }
+            .w-hero-content { grid-template-columns: 1fr; gap: 4rem; display: flex; flex-direction: column; }
+            .w-hero-title { font-size: 5rem; line-height: 1; }
+            .w-hero-image-wrap { height: 50vh; width: 100%; clip-path: none; order: -1; }
+            .w-hero-bg-text { display: none; }
+            .w-hero-tag { display: none; }
+            
+            .w-horiz-container { height: auto; width: 100%; flex-direction: column; display: block; }
+            .w-horiz-panel { height: auto; width: 100%; padding: 60px 5vw; border-bottom: 1px solid rgba(178, 132, 190, 0.1); display: block; }
+            .w-panel-content { grid-template-columns: 1fr; gap: 3rem; text-align: center; display: flex; flex-direction: column; }
+            .w-panel-text { font-size: 1.8rem; order: 2; }
+            .w-panel-text h2 { font-size: 2.5rem; line-height: 1.1; }
+            .w-panel-img { width: 100%; height: 400px; object-fit: cover; border-radius: 10px; order: 1; }
+            
+            .w-footer-alt-content { flex-direction: column; text-align: center; gap: 3rem; }
+            .w-footer-social { justify-content: center; }
+          }
 
         .w-hero {
           height: 100vh;
@@ -391,15 +391,7 @@ export default function WomanHome() {
         }
       `}</style>
 
-      {/* UNIQUE WOMAN NAV */}
-      <nav className={`w-nav-custom ${isScrolled ? 'scrolled' : ''}`}>
-        <Link to="/woman" className="w-nav-logo">GREY</Link>
-        <div className="w-nav-links">
-          <Link to="/woman" className="w-nav-link">Home</Link>
-          <Link to="/woman/collection" className="w-nav-link">Collection</Link>
-          <Link to="/woman/contact" className="w-nav-link">Inquire</Link>
-        </div>
-      </nav>
+      <WomanNav />
 
       <div className="w-marquee-v">
         <div className="w-marquee-v__inner">
@@ -422,7 +414,7 @@ export default function WomanHome() {
               A unique vision of retail. Where the raw foundation of Grey meets the sculptural elegance of the modern woman.
             </p>
             <div style={{ marginTop: '4rem', display: 'flex', gap: '2rem', alignItems: 'center' }}>
-              <Link to="/collection" style={{ 
+              <Link to="/woman/collection" style={{ 
                 padding: '1.2rem 1.8rem', 
                 background: '#B284BE', 
                 color: '#2D1D34', 

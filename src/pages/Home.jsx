@@ -114,23 +114,14 @@ export default function Home() {
   const [heroColor, setHeroColor] = useState('#2A1F17')
   const vantaRef = useRef(null)
   const [vantaEffect, setVantaEffect] = useState(null)
-  const [fabrics, setFabrics] = useState([])
+  const [fabrics, setFabrics] = useState([
+    { name: 'Industrial Cotton', weight: '320gsm', tag: 'Heavy Duty', stock: '2,400m', image: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&q=80&w=800' },
+    { name: 'Standard Greige', weight: '180gsm', tag: 'Raw Material', stock: '1,150m', image: 'https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&q=80&w=800' },
+    { name: 'Woven Twill', weight: '220gsm', tag: 'Apparel', stock: '850m', image: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&q=80&w=800' },
+    { name: 'Canvas Pro', weight: '450gsm', tag: 'Technical', stock: '3,200m', image: 'https://images.unsplash.com/photo-1574015974293-817f0efebb1b?auto=format&fit=crop&q=80&w=800' }
+  ])
 
-  // Fetch from backend
-  useEffect(() => {
-    fetch('http://localhost:8001/api/products/')
-      .then(res => res.json())
-      .then(data => {
-        setFabrics(data.slice(0, 4))
-      })
-      .catch(err => console.error(err))
-  }, [])
-
-  const getImageUrl = (url) => {
-    if (!url) return null;
-    if (url.startsWith('http')) return url;
-    return `http://localhost:8001${url}`;
-  };
+  const getImageUrl = (url) => url;
 
   // Parallax on hero fabric bg
   useParallax(heroBgRef, 0.25)

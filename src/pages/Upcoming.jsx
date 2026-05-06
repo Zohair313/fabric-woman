@@ -5,30 +5,14 @@ import Footer from '../components/Footer'
 
 export default function Upcoming() {
   useScrollReveal()
-  const [products, setProducts] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [products, setProducts] = useState([
+    { name: 'Organic Silk Voile', weight: '60gsm', tag: 'Limited', image: 'https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?auto=format&fit=crop&q=80&w=800', description: 'Ultra-lightweight organic silk base, ideal for luxury summer draping.' },
+    { name: 'Brutal Canvas', weight: '550gsm', tag: 'Structural', image: 'https://images.unsplash.com/photo-1574015974293-817f0efebb1b?auto=format&fit=crop&q=80&w=800', description: 'Our heaviest canvas yet, designed for architectural silhouettes and durable luggage.' },
+    { name: 'Lustre Sateen', weight: '120gsm', tag: 'Premium', image: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&q=80&w=800', description: 'High-thread count sateen with a natural sheen, perfect for high-fashion ready-to-wear.' }
+  ])
+  const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
-    fetchProducts()
-  }, [])
-
-  const fetchProducts = async () => {
-    try {
-      const res = await fetch('http://localhost:8001/api/products/upcoming/')
-      const data = await res.json()
-      setProducts(data)
-    } catch (err) {
-      console.error("Error fetching upcoming products:", err)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const getImageUrl = (url) => {
-    if (!url) return null;
-    if (url.startsWith('http')) return url;
-    return `http://localhost:8001${url}`;
-  };
+  const getImageUrl = (url) => url;
 
   return (
     <main className="collection-page">

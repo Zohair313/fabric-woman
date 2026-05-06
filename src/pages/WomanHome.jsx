@@ -83,26 +83,6 @@ export default function WomanHome() {
           font-family: 'Playfair Display', serif;
         }
 
-          @media (max-width: 991px) {
-            .w-hero { height: auto; min-height: 100vh; padding: 120px 5vw 60px; display: block; }
-            .w-hero-content { grid-template-columns: 1fr; gap: 4rem; display: flex; flex-direction: column; }
-            .w-hero-title { font-size: 4rem; line-height: 1.1; margin-left: 0; }
-            .w-hero-title .italic { margin-top: 0; letter-spacing: 0; }
-            .w-hero-image-wrap { height: 50vh; width: 100%; clip-path: none; order: -1; }
-            .w-hero-bg-text { display: none; }
-            .w-hero-tag { display: none; }
-            .w-marquee-v { display: none; }
-            
-            .w-horiz-container { height: auto; width: 100%; flex-direction: column; display: block; }
-            .w-horiz-panel { height: auto; width: 100%; padding: 60px 5vw; border-bottom: 1px solid rgba(178, 132, 190, 0.1); display: block; }
-            .w-panel-content { grid-template-columns: 1fr; gap: 3rem; text-align: center; display: flex; flex-direction: column; }
-            .w-panel-text { font-size: 1.8rem; order: 2; }
-            .w-panel-text h2 { font-size: 2.5rem; line-height: 1.1; }
-            .w-panel-img { width: 100%; height: 400px; object-fit: cover; border-radius: 10px; order: 1; }
-            
-            .w-footer-alt-content { flex-direction: column; text-align: center; gap: 3rem; }
-            .w-footer-social { justify-content: center; }
-          }
 
         .w-hero {
           height: 100vh;
@@ -299,12 +279,6 @@ export default function WomanHome() {
           100% { transform: translateY(-50%); }
         }
 
-        @media (max-width: 768px) {
-          .w-hero-split { flex-direction: column; }
-          .w-panel-content { grid-template-columns: 1fr; text-align: center; }
-          .w-marquee-v { display: none; }
-          .w-nav-links { display: flex; gap: 1rem; }
-        }
 
         /* NEW FOOTER & INQUIRY STYLES */
         .w-inquiry-section {
@@ -384,12 +358,26 @@ export default function WomanHome() {
         }
 
         @media (max-width: 991px) {
-          .w-footer-grid { grid-template-columns: 1fr 1fr; }
-        }
-
-        @media (max-width: 576px) {
-          .w-footer-grid { grid-template-columns: 1fr; }
-          .w-footer-bottom { flex-direction: column; gap: 2rem; text-align: center; }
+          .w-hero { height: auto !important; min-height: 100vh !important; padding: 120px 5vw 60px !important; display: block !important; }
+          .w-hero-content { grid-template-columns: 1fr !important; gap: 4rem !important; display: flex !important; flex-direction: column !important; }
+          .w-hero-title { font-size: 3.5rem !important; line-height: 1.1 !important; margin-left: 0 !important; }
+          .w-hero-title .italic { margin-top: 0 !important; letter-spacing: 0 !important; display: block !important; }
+          .w-hero-image-wrap { height: 50vh !important; width: 100% !important; clip-path: none !important; order: -1 !important; }
+          .w-hero-bg-text { display: none !important; }
+          .w-hero-tag { display: none !important; }
+          .w-marquee-v { display: none !important; }
+          
+          .w-horiz-container { height: auto !important; width: 100% !important; flex-direction: column !important; display: block !important; }
+          .w-horiz-panel { height: auto !important; width: 100% !important; padding: 60px 5vw !important; border-bottom: 1px solid rgba(178, 132, 190, 0.1) !important; display: block !important; }
+          .w-panel-content { grid-template-columns: 1fr !important; gap: 3rem !important; text-align: center !important; display: flex !important; flex-direction: column !important; }
+          .w-panel-text { font-size: 1.6rem !important; order: 2 !important; }
+          .w-panel-text h2 { font-size: 2.2rem !important; line-height: 1.1 !important; }
+          .w-panel-img { width: 100% !important; height: 350px !important; object-fit: cover !important; border-radius: 10px !important; order: 1 !important; }
+          
+          .w-footer-grid { grid-template-columns: 1fr !important; gap: 3rem !important; }
+          .w-footer-bottom { flex-direction: column !important; gap: 2rem !important; text-align: center !important; }
+          .w-footer-alt-content { flex-direction: column !important; text-align: center !important; gap: 3rem !important; }
+          .w-footer-social { justify-content: center !important; }
         }
       `}</style>
 

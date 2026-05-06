@@ -109,10 +109,10 @@ export default function WomanNav() {
           letter-spacing: 0.2rem;
         }
 
-        @media (max-width: 991px) {
-          .w-nav-desktop { display: none; }
-          .w-nav-mobile-toggle { display: block; }
-          .w-nav-container { padding: 1.5rem 5vw; }
+        @media (max-width: 1100px) {
+          .w-nav-desktop { display: none !important; }
+          .w-nav-mobile-toggle { display: block !important; }
+          .w-nav-container { padding: 1.5rem 5vw !important; }
         }
       `}</style>
 

@@ -48,6 +48,7 @@ export default function WomanCollection() {
           min-height: 100vh;
           padding: 180px 5vw 100px;
           font-family: 'Playfair Display', serif;
+          overflow-x: hidden;
         }
 
         @media (max-width: 991px) {
@@ -59,54 +60,6 @@ export default function WomanCollection() {
           .coll-grid { grid-template-columns: 1fr; gap: 3rem; }
         }
 
-        .w-nav {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          padding: 2rem 5vw;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          z-index: 1000;
-          transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-
-        .w-nav.scrolled {
-          padding: 1.2rem 5vw;
-          background: rgba(45, 29, 52, 0.95);
-          backdrop-filter: blur(10px);
-          border-bottom: 1px solid rgba(178, 132, 190, 0.2);
-        }
-
-        .w-logo {
-          font-size: 1.5rem;
-          font-weight: 700;
-          letter-spacing: 0.3rem;
-          color: #FFFFFF;
-          text-decoration: none;
-        }
-
-        .w-nav-links {
-          display: flex;
-          gap: 3rem;
-          list-style: none;
-        }
-
-        .w-nav-link {
-          color: #FFFFFF;
-          text-decoration: none;
-          font-family: 'Jost', sans-serif;
-          font-size: 0.8rem;
-          text-transform: uppercase;
-          letter-spacing: 0.2rem;
-          opacity: 0.7;
-          transition: opacity 0.3s;
-        }
-
-        .w-nav-link:hover, .w-nav-link.active {
-          opacity: 1;
-        }
 
         .coll-header {
           margin-bottom: 8rem;
@@ -246,14 +199,7 @@ export default function WomanCollection() {
         }
       `}</style>
 
-      <nav className={`w-nav ${isScrolled ? 'scrolled' : ''}`}>
-        <Link to="/woman" className="w-logo">GREY</Link>
-        <ul className="w-nav-links">
-          <li><Link to="/woman" className="w-nav-link">Home</Link></li>
-          <li><Link to="/woman/collection" className="w-nav-link active">Collection</Link></li>
-          <li><Link to="/woman/contact" className="w-nav-link">Inquire</Link></li>
-        </ul>
-      </nav>
+      <WomanNav />
 
       <header className="coll-header">
         <div style={{ flex: 1 }}>

@@ -32,56 +32,9 @@ export default function WomanContact() {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 6rem;
+          overflow-x: hidden;
         }
 
-        .w-nav {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          padding: 2rem 5vw;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          z-index: 1000;
-          transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-
-        .w-nav.scrolled {
-          padding: 1.2rem 5vw;
-          background: rgba(45, 29, 52, 0.95);
-          backdrop-filter: blur(10px);
-          border-bottom: 1px solid rgba(178, 132, 190, 0.2);
-        }
-
-        .w-logo {
-          font-size: 1.5rem;
-          font-weight: 700;
-          letter-spacing: 0.3rem;
-          color: #FFFFFF;
-          text-decoration: none;
-        }
-
-        .w-nav-links {
-          display: flex;
-          gap: 3rem;
-          list-style: none;
-        }
-
-        .w-nav-link {
-          color: #FFFFFF;
-          text-decoration: none;
-          font-family: 'Jost', sans-serif;
-          font-size: 0.8rem;
-          text-transform: uppercase;
-          letter-spacing: 0.2rem;
-          opacity: 0.7;
-          transition: opacity 0.3s;
-        }
-
-        .w-nav-link:hover, .w-nav-link.active {
-          opacity: 1;
-        }
 
         .inq-title {
           font-size: clamp(3rem, 7vw, 8.5rem);

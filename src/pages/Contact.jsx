@@ -161,8 +161,10 @@ export default function Contact() {
         }
 
         @media (max-width: 991px) {
-          .contact-container { grid-template-columns: 1fr; gap: 6rem; }
+          .contact-container { grid-template-columns: 1fr; gap: 6rem; padding-top: 5rem; }
           .form-card { padding: 3rem 2rem; }
+          .info-value { font-size: 1.4rem; }
+          .contact-title { font-size: 3.5rem; }
         }
       `}</style>
 

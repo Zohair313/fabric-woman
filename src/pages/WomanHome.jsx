@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Link } from 'react-router-dom'
+import WomanNav from '../components/WomanNav'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -80,75 +81,26 @@ export default function WomanHome() {
           font-family: 'Playfair Display', serif;
         }
 
-        /* WOMAN ONLY NAV */
-        .w-nav-custom {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          padding: 2.5rem 5vw;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          z-index: 100;
-          background: transparent;
-          transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+        @media (max-width: 991px) {
+          .w-hero { height: auto; padding: 120px 5vw 60px; }
+          .w-hero-content { grid-template-columns: 1fr; gap: 2rem; }
+          .w-hero-title { font-size: clamp(4rem, 15vw, 8rem); line-height: 1; }
+          .w-hero-image-wrap { height: 60vh; clip-path: none; }
+          .w-hero-bg-text { display: none; }
+          .w-hero-tag { display: none; }
+          
+          .w-horiz-container { height: auto; width: 100%; flex-direction: column; }
+          .w-horiz-panel { height: auto; width: 100%; padding: 80px 5vw; border-bottom: 1px solid rgba(178, 132, 190, 0.1); }
+          .w-panel-content { grid-template-columns: 1fr; gap: 2rem; text-align: center; }
+          .w-panel-text { font-size: 2rem; order: 1; }
+          .w-panel-img { width: 80%; margin: 0 auto; order: 2; }
+          
+          .w-footer-alt-content { flex-direction: column; text-align: center; gap: 3rem; }
+          .w-footer-social { justify-content: center; }
         }
+      `}</style>
 
-        .w-nav-custom.scrolled {
-          padding: 1.2rem 5vw;
-          background: rgba(45, 29, 52, 0.95);
-          backdrop-filter: blur(20px);
-          border-bottom: 1px solid rgba(178, 132, 190, 0.1);
-        }
-
-        .w-nav-logo {
-          font-size: 1.8rem;
-          font-weight: 900;
-          letter-spacing: 0.8rem;
-          color: #B284BE;
-          text-decoration: none;
-          transition: letter-spacing 0.5s;
-        }
-
-        .scrolled .w-nav-logo {
-          letter-spacing: 0.5rem;
-        }
-
-        .w-nav-links {
-          display: flex;
-          gap: 4rem;
-        }
-
-        .w-nav-link {
-          color: #B284BE;
-          text-decoration: none;
-          font-weight: 600;
-          text-transform: uppercase;
-          letter-spacing: 0.25rem;
-          font-size: 0.75rem;
-          transition: opacity 0.3s, transform 0.3s;
-          position: relative;
-        }
-
-        .w-nav-link::after {
-          content: '';
-          position: absolute;
-          bottom: -5px;
-          left: 0;
-          width: 0;
-          height: 1px;
-          background: currentColor;
-          transition: width 0.4s ease;
-        }
-
-        .w-nav-link:hover::after {
-          width: 100%;
-        }
-
-        .w-nav-link:hover {
-          opacity: 0.7;
-        }
+      <WomanNav />
 
         .w-hero {
           height: 100vh;

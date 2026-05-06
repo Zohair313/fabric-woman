@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import WomanNav from '../components/WomanNav'
 
 export default function WomanContact() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -190,18 +191,14 @@ export default function WomanContact() {
         }
 
         @media (max-width: 991px) {
-          .inq-page { grid-template-columns: 1fr; gap: 4rem; padding-top: 150px; }
+          .inq-page { grid-template-columns: 1fr; gap: 4rem; padding-top: 120px; }
+          .inq-title { font-size: 4.5rem; margin-bottom: 4rem; }
+          .inq-form-wrap { padding: 2.5rem; }
         }
       `}</style>
 
-      <nav className={`w-nav ${isScrolled ? 'scrolled' : ''}`}>
-        <Link to="/woman" className="w-logo">GREY</Link>
-        <ul className="w-nav-links">
-          <li><Link to="/woman" className="w-nav-link">Home</Link></li>
-          <li><Link to="/woman/collection" className="w-nav-link">Collection</Link></li>
-          <li><Link to="/woman/contact" className="w-nav-link active">Inquire</Link></li>
-        </ul>
-      </nav>
+      <WomanNav />
+
 
       <div className="inq-left">
         <h1 className="inq-title">

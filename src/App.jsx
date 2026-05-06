@@ -48,9 +48,14 @@ function App() {
       {loading && <Preloader />}
       {!loading && (
         <>
-          <div style={{ position: 'fixed', bottom: '10px', left: '10px', background: 'rgba(0,0,0,0.5)', color: 'white', padding: '5px', fontSize: '10px', zIndex: 999999, pointerEvents: 'none' }}>
+          <div className="system-badge" style={{ position: 'fixed', bottom: '10px', left: '10px', background: 'rgba(0,0,0,0.5)', color: 'white', padding: '5px', fontSize: '10px', zIndex: 999999, pointerEvents: 'none' }}>
             System Live: v1.1.5
           </div>
+          <style>{`
+            @media (max-width: 768px) {
+              .system-badge { display: none; }
+            }
+          `}</style>
           
           {/* Main Nav only shows on non-woman pages */}
           {!isWomanPage && <Nav />}

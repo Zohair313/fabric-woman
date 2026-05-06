@@ -170,6 +170,9 @@ export default function Collection() {
 
         @media (max-width: 991px) {
           .grey-grid { grid-template-columns: 1fr; gap: 6rem; }
+          .coll-hero { height: 40vh; }
+          .coll-filter-bar { flex-direction: column; align-items: flex-start; gap: 2.5rem; }
+          .grey-card-name { font-size: 2rem; }
         }
       `}</style>
 

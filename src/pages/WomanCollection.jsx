@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import WomanNav from '../components/WomanNav'
 import { gsap } from 'gsap'
 
 const PRODUCTS = [
@@ -47,6 +48,15 @@ export default function WomanCollection() {
           min-height: 100vh;
           padding: 180px 5vw 100px;
           font-family: 'Playfair Display', serif;
+        }
+
+        @media (max-width: 991px) {
+          .coll-page { padding-top: 120px; }
+          .coll-header { flex-direction: column; align-items: flex-start; gap: 2rem; margin-bottom: 4rem; }
+          .coll-title { font-size: 4.5rem; margin-bottom: 2rem; }
+          .coll-hero-slider { width: 100%; height: 350px; order: 2; }
+          .coll-header > div:first-child { order: 1; }
+          .coll-grid { grid-template-columns: 1fr; gap: 3rem; }
         }
 
         .w-nav {

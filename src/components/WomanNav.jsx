@@ -117,12 +117,12 @@ export default function WomanNav() {
       `}</style>
 
       <nav className={`w-nav-container ${scrolled ? 'scrolled' : ''}`}>
-        <Link to="/woman" className="w-nav-logo">GREY</Link>
+        <Link to="/" className="w-nav-logo">GREY</Link>
         
         <ul className="w-nav-desktop">
-          <li><Link to="/woman" className={`w-nav-link ${location.pathname === '/woman' ? 'active' : ''}`}>Home</Link></li>
-          <li><Link to="/woman/collection" className={`w-nav-link ${location.pathname === '/woman/collection' ? 'active' : ''}`}>Collection</Link></li>
-          <li><Link to="/woman/contact" className={`w-nav-link ${location.pathname === '/woman/contact' ? 'active' : ''}`}>Inquire</Link></li>
+          <li><Link to="/" className={`w-nav-link ${location.pathname === '/' ? 'active' : ''}`}>Home</Link></li>
+          <li><Link to="/collection" className={`w-nav-link ${location.pathname === '/collection' ? 'active' : ''}`}>Collection</Link></li>
+          <li><Link to="/contact" className={`w-nav-link ${location.pathname === '/contact' ? 'active' : ''}`}>Inquire</Link></li>
         </ul>
 
         <button className="w-nav-mobile-toggle" onClick={() => setIsOpen(!isOpen)}>
@@ -131,9 +131,9 @@ export default function WomanNav() {
       </nav>
 
       <div className={`w-mobile-overlay ${isOpen ? 'active' : ''}`}>
-        <Link to="/woman" className="w-mobile-link">Home</Link>
-        <Link to="/woman/collection" className="w-mobile-link">Collection</Link>
-        <Link to="/woman/contact" className="w-mobile-link">Inquire</Link>
+        <Link to="/" className="w-mobile-link">Home</Link>
+        <Link to="/collection" className="w-mobile-link">Collection</Link>
+        <Link to="/contact" className="w-mobile-link">Inquire</Link>
       </div>
     </>
   )
